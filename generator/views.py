@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import JsonResponse
-from .groq_api import generate_test_cases
+from .openAI_api import generate_test_cases
 
 def home(request):
     """Display the input form for entering requirements"""
