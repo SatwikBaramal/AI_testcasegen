@@ -30,19 +30,26 @@ def generate_test_cases(requirement):
         "Content-Type": "application/json"
     }
 
+    # ...existing code...
     data = {
-        "model": "gpt-4.1",  # Available GitHub models: gpt-4o, gpt-4o-mini, gpt-3.5-turbo
+        "model": "gpt-4.1",
         "messages": [
-            {
-                "role": "system",
-                "content": "You are an expert software test engineer who creates comprehensive test cases with working Selenium and Pytest code."
-            },
             {
                 "role": "user",
                 "content": f"""
-Generate exactly 5 test cases in valid JSON format (array of objects) for the following requirement:
-
+You are a software test engineer. Generate exactly 5 test cases in valid JSON format (array of objects) for the following requirement:
 \"\"\"{requirement}\"\"\"
+
+For each test case, include:
+- title
+- description
+- input
+- expected_output
+- priority
+- type
+- pytest_code: Pytest code for the test
+- robot_code: Robot Framework code for the test
+- manual_steps: a clear, step-by-step guide for a human tester to perform the test manually (as a string, use bullet points or numbered steps).
 
 Return ONLY a JSON array with this exact structure:
 [
@@ -50,21 +57,22 @@ Return ONLY a JSON array with this exact structure:
     "id": 1,
     "title": "Test case title",
     "description": "Test case description",
-    "input": "Input data or conditions", 
+    "input": "Input data or conditions",
     "expected_output": "Expected result",
     "priority": "High/Medium/Low",
     "type": "Functional/UI/Integration",
-    "selenium_code": "# Selenium WebDriver test code\\nfrom selenium import webdriver\\nfrom selenium.webdriver.common.by import By\\nfrom selenium.webdriver.support.ui import WebDriverWait\\nfrom selenium.webdriver.support import expected_conditions as EC\\n\\ndef test_example():\\n    driver = webdriver.Chrome()\\n    try:\\n        driver.get('https://example.com')\\n        # Add test steps here\\n        element = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID, 'example-id')))\\n        element.click()\\n        assert 'Expected' in driver.page_source\\n    finally:\\n        driver.quit()",
-    "pytest_code": "# Pytest test code\\nimport pytest\\n\\ndef test_example():\\n    # Add test logic here\\n    result = perform_test_function()\\n    assert result is not None\\n    assert result == 'expected_value'"
+    "pytest_code": "# Pytest code ...",
+    "robot_code": "*** Test Cases ***\nRobot Framework code ...",
+    "manual_steps": "1. Open the app\n2. Enter valid credentials\n3. Click Login\n4. Verify dashboard is shown"
   }}
 ]
 
-Do not include markdown formatting or explanations.
+Make sure the code is properly escaped for JSON and includes realistic test scenarios and manual steps.
 """
             }
         ],
-        "temperature": 0.3,
-        "max_tokens": 30000
+        "temperature": 0.7,
+        "max_tokens": 20000
     }
 
     try:
@@ -144,8 +152,9 @@ Do not include markdown formatting or explanations.
                     "expected_output": case.get("expected_output", "Not specified"),
                     "priority": case.get("priority", "Medium"),
                     "type": case.get("type", "Functional"),
-                    "selenium_code": case.get("selenium_code", "# No Selenium code provided"),
-                    "pytest_code": case.get("pytest_code", "# No Pytest code provided")
+                    "pytest_code": case.get("pytest_code", "# No Pytest code provided"),
+                    "robot_code": case.get("robot_code", "# No Robot Framework code provided"),
+                    "manual_steps": case.get("manual_steps", "No manual steps provided")
                 }
                 validated_cases.append(validated_case)
             

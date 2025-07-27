@@ -3,48 +3,72 @@
 <p><strong>Requirement:</strong> {{ requirement }}</p>
 
 <div style="margin-bottom: 20px;">
-    <a href="{% url 'test_cases_json' %}" target="_blank" style="background: #007cba; color: white; padding: 8px 16px; text-decoration: none; border-radius: 4px;">
+    <a href="{% url 'test_cases_json' %}" target="_blank"
+        style="background: #007cba; color: white; padding: 8px 16px; text-decoration: none; border-radius: 4px;">
         📄 View as JSON
     </a>
 </div>
 
 <table border="1" cellpadding="8" style="width: 100%; border-collapse: collapse;">
-  <tr style="background-color: #f5f5f5;">
-    <th style="width: 15%;">Title</th>
-    <th style="width: 20%;">Description</th>
-    <th style="width: 10%;">Type</th>
-    <th style="width: 10%;">Priority</th>
-    <th style="width: 22.5%;">Selenium Code</th>
-    <th style="width: 22.5%;">Pytest Code</th>
-  </tr>
-  {% for case in testcases %}
-  <tr>
-    <td>
-        <strong>{{ case.title|default:"(No title)" }}</strong>
-        <br><small>ID: {{ case.id|default:"N/A" }}</small>
-        <br><a href="{% url 'test_case_json' case.id %}" target="_blank" style="font-size: 11px;">JSON</a>
-    </td>
-    <td>{{ case.description|default:"(No description)" }}</td>
-    <td>{{ case.type|default:"Functional" }}</td>
-    <td>{{ case.priority|default:"Medium" }}</td>
-    <td>
-        <details>
-            <summary style="cursor: pointer; color: #007cba;">View Code</summary>
-            <pre style="background: #f8f8f8; padding: 10px; margin: 5px 0; overflow-x: auto; font-size: 12px;"><code>{{ case.selenium_code|default:"# No Selenium code available" }}</code></pre>
-        </details>
-    </td>
-    <td>
-        <details>
-            <summary style="cursor: pointer; color: #007cba;">View Code</summary>
-            <pre style="background: #f8f8f8; padding: 10px; margin: 5px 0; overflow-x: auto; font-size: 12px;"><code>{{ case.pytest_code|default:"# No Pytest code available" }}</code></pre>
-        </details>
-    </td>
-  </tr>
-  {% endfor %}
+    <tr style="background-color: #f5f5f5;">
+        <th style="width: 12%;">Title</th>
+        <th style="width: 16%;">Description</th>
+        <th style="width: 8%;">Type</th>
+        <th style="width: 8%;">Priority</th>
+        <th style="width: 20%;">Code</th>
+        <th style="width: 20%;">Manual Steps</th>
+        <th style="width: 16%;">Expected Output</th>
+    </tr>
+    {% for case in testcases %}
+    <tr>
+        <td>
+            <strong>{{ case.title|default:"(No title)" }}</strong>
+            <br><small>ID: {{ case.id|default:"N/A" }}</small>
+            <br><a href="{% url 'test_case_json' case.id %}" target="_blank" style="font-size: 11px;">JSON</a>
+        </td>
+        <td>{{ case.description|default:"(No description)" }}</td>
+        <td>{{ case.type|default:"Functional" }}</td>
+        <td>{{ case.priority|default:"Medium" }}</td>
+        <td>
+            <details>
+                <summary style="cursor: pointer; color: #007cba;">Show Code</summary>
+                <div>
+                    <button type="button" onclick="toggleCode(this, 'pytest')">Pytest</button>
+                    <button type="button" onclick="toggleCode(this, 'robot')">Robot Framework</button>
+                    <div class="code-block" data-type="pytest" style="display:block;">
+                        <pre
+                            style="background: #f8f8f8; padding: 10px; margin: 5px 0; overflow-x: auto; font-size: 12px;"><code>{{ case.pytest_code|default:"# No Pytest code available" }}</code></pre>
+                    </div>
+                    <div class="code-block" data-type="robot" style="display:none;">
+                        <pre
+                            style="background: #f8f8f8; padding: 10px; margin: 5px 0; overflow-x: auto; font-size: 12px;"><code>{{ case.robot_code|default:"# No Robot Framework code available" }}</code></pre>
+                    </div>
+                </div>
+            </details>
+        </td>
+        <td>
+            <details>
+                <summary style="cursor: pointer; color: #007cba;">View Steps</summary>
+                <pre
+                    style="background: #f8f8f8; padding: 10px; margin: 5px 0; overflow-x: auto; font-size: 12px;">{{ case.manual_steps|default:"No manual steps provided" }}</pre>
+            </details>
+        </td>
+        <td>{{ case.expected_output|default:"(No expected output)" }}</td>
+    </tr>
+    {% endfor %}
 </table>
+<script>
+    function toggleCode(btn, type) {
+        var container = btn.closest('div');
+        var blocks = container.querySelectorAll('.code-block');
+        blocks.forEach(function (block) {
+            block.style.display = (block.getAttribute('data-type') === type) ? 'block' : 'none';
+        });
+    }
+</script>
 
 <br>
 <div style="margin-top: 20px;">
-    <a href="{% url 'home' %}">← Generate Again</a> | 
+    <a href="{% url 'home' %}">← Generate Again</a> |
     <a href="{% url 'test_cases_json' %}" target="_blank">Download JSON</a>
 </div>
