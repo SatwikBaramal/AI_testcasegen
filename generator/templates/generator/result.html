@@ -72,3 +72,13 @@
     <a href="{% url 'home' %}">← Generate Again</a> |
     <a href="{% url 'test_cases_json' %}" target="_blank">Download JSON</a>
 </div>
+<div style="margin-bottom: 20px; margin-top: 30px;">
+    <a href="{% url 'test_cases_json' %}" target="_blank"
+        style="background: #007cba; color: white; padding: 8px 16px; text-decoration: none; border-radius: 4px;">
+        📄 View as JSON
+    </a>
+    <a href="{% url 'export_testcases_excel' %}"
+        style="background: #28a745; color: white; padding: 8px 16px; text-decoration: none; border-radius: 4px; margin-left: 10px;">
+        ⬇️ Download Excel
+    </a>
+</div>

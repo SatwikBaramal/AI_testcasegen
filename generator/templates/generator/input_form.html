@@ -1,23 +1,27 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>AI Test Case Generator</title>
 </head>
+
 <body>
     <h1>AI Test Case Generator</h1>
-    
+
     {% if error %}
-        <div style="color: red; margin-bottom: 20px;">{{ error }}</div>
+    <div style="color: red; margin-bottom: 20px;">{{ error }}</div>
     {% endif %}
-    
+
     <form method="post" action="{% url 'generate_testcases' %}">
         {% csrf_token %}
         <div>
             <label for="requirement">Enter your requirement:</label><br>
-            <textarea name="requirement" id="requirement" rows="5" cols="50" placeholder="Describe what you want to test..." required></textarea>
+            <textarea name="requirement" id="requirement" rows="5" cols="100"
+                placeholder="Describe what you want to test..." required></textarea>
         </div>
         <br>
         <button type="submit">Generate Test Cases</button>
     </form>
 </body>
+
 </html>
