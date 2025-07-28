@@ -75,7 +75,7 @@ Make sure the code is properly escaped for JSON and includes realistic test scen
             }
         ],
         "temperature": 0.7,
-        "max_tokens": 20000,
+        "max_tokens": 6000,
     }
 
     try:

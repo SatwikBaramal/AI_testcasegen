@@ -1,27 +1,115 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-    <title>AI Test Case Generator</title>
+    <title>AI Test Cases Generator</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Google Fonts: Poppins for title, Inter for body -->
+    <!-- <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Poppins:wght@600&display=swap" rel="stylesheet"> -->
+    <!-- Bootstrap 5 CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            /* font-family: 'Inter', Arial, sans-serif; */
+            font-size: 1rem;
+            background: linear-gradient(120deg, #f8fafc 0%, #e0e7ff 100%);
+            min-height: 100vh;
+        }
+        .card {
+            box-shadow: 0 6px 32px 0 rgba(80, 80, 120, 0.13), 0 1.5px 6px 0 rgba(80, 80, 120, 0.10);
+            border-radius: 1.2rem;
+        }
+        .card-title {
+            /* font-family: 'Poppins', Arial, sans-serif; */
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            font-size: 2.1rem;
+        }
+        .form-label {
+            font-weight: 500;
+            color: #374151;
+        }
+        .form-control {
+            font-size: 1rem;
+            border-radius: 0.6rem;
+        }
+        .btn-success {
+            font-weight: 500;
+            font-size: 1.1rem;
+            border-radius: 0.5rem;
+            transition: background 0.2s, box-shadow 0.2s;
+            box-shadow: 0 2px 8px 0 rgba(40, 167, 69, 0.08);
+        }
+        .btn-success:hover, .btn-success:focus {
+            background: #198754;
+            box-shadow: 0 4px 16px 0 rgba(40, 167, 69, 0.15);
+        }
+        .alert {
+            font-size: 1rem;
+        }
+        footer {
+            font-family: 'Inter', Arial, sans-serif;
+            font-size: 0.95rem;
+            color: #6b7280;
+        }
+        .btn-ruckus {
+            background-color: var(--ruckus-orange);
+            color: #000000;
+            border: none;
+        }
+        .btn-ruckus:hover, .btn-ruckus:focus {
+            background-color: #e65c0f;
+            color: #fff;
+        }
+        /* Optional: add a soft illustration or SVG background */
+        /* .hero-bg {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 350px;
+            background: radial-gradient(ellipse at 60% 40%, #a5b4fc 0%, #f8fafc 80%);
+            z-index: 0;
+            pointer-events: none;
+        } */
+        .container {
+            position: relative;
+            z-index: 1;
+        }
+    </style>
 </head>
+<body class="bg-light">
 
-<body>
-    <h1>AI Test Case Generator</h1>
+    <div class="hero-bg"></div>
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 col-md-10">
+                <div class="card shadow-sm">
+                    <div class="card-body p-4">
+                        <h1 class="card-title mb-4 text-center">AI TEST CASE GENERATOR</h1>
 
-    {% if error %}
-    <div style="color: red; margin-bottom: 20px;">{{ error }}</div>
-    {% endif %}
+                        {% if error %}
+                        <div class="alert alert-danger" role="alert">
+                            {{ error }}
+                        </div>
+                        {% endif %}
 
-    <form method="post" action="{% url 'generate_testcases' %}">
-        {% csrf_token %}
-        <div>
-            <label for="requirement">Enter your requirement:</label><br>
-            <textarea name="requirement" id="requirement" rows="5" cols="100"
-                placeholder="Describe what you want to test..." required></textarea>
+                        <form method="post" action="{% url 'generate_testcases' %}">
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <label for="requirement" class="form-label">Enter your requirements:</label>
+                                <textarea name="requirement" id="requirement" rows="6" class="form-control"
+                                    placeholder="e.g., login authentication test cases for banking site..." required></textarea>
+                            </div>
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-ruckus btn-lg">Generate Test Cases</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <footer class="mt-4 text-center text-muted">
+                    <small>&copy; {{ year|default:2025 }} AI Test Case Generator</small>
+                </footer>
+            </div>
         </div>
-        <br>
-        <button type="submit">Generate Test Cases</button>
-    </form>
-</body>
+    </div>
 
-</html>
+    <!-- Bootstrap JS (optional, for interactivity) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
