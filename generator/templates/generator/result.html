@@ -22,7 +22,7 @@
     </style>
 </head>
 
-<body class="bg-light">
+<body class="bg-dark-subtle">
 
     <div class="container py-5">
         <div class="row justify-content-center">
@@ -67,7 +67,14 @@
                                             <a href="{% url 'test_case_json' case.id %}" target="_blank"
                                                 style="font-size: 11px;">JSON</a>
                                         </td>
-                                        <td>{{ case.description|default:"(No description)" }}</td>
+                                        <td>
+                                            <details>
+                                                <summary style="cursor: pointer; color: #007cba;">Show Description
+                                                </summary>
+                                                <pre class="bg-light p-2 rounded mt-2"
+                                                    style="font-size: 12px; overflow-x: auto; white-space: pre-wrap;">{{ case.description|default:"(No description)" }}</pre>
+                                            </details>
+                                        </td>
                                         <td>{{ case.type|default:"Functional" }}</td>
                                         <td>{{ case.priority|default:"Medium" }}</td>
                                         <td>
